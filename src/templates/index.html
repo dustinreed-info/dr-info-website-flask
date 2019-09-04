@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+{{ title }} - Dustin Reed Info
+{% endblock %}
+{% block content %}
+<h1>
+    About Me:
+</h1>
+<p>
+    My name is Dustin Reed and I am a certified AWS Solutions Architect and Developer. I have been in enterprise IT since 2010.
+    I have had a lifelong passion in computing.  In fact, one of my first memories is typing my name on a Commodore 64.  When I 
+    was about 8 years old I wrote my first application in QBasic to brute force a password that my Dad put on a game that I had liked at the time.
+    In high school I started developing games on my TI-83 calculator and then took a computer programming class and learned
+    Turbo Pascal and C++.  Eventually I started a job in IT Operations.  I then leveraged my programming knowledge to create shell scripts
+    to automate my day to day tasks.  As my programming skills increased, I decided to learn PowerShell as it is integrated with most Windows Services.
+    I am now focusing on Python and boto3 which is a SDK for managing AWS services.
+    I am utilizing DevOps methodologies to define my cloud infrastructure as code and track any changes with version control and then automate deploy my
+    code to the cloud platforms with my CI/CD Pipelines.  This allows me to architect infrastructure that is scalable, highly available, secure,
+    repeatable, and consistent.  This eases the burden on releasing software deployments allowing applications to be decoupled
+    into microservices and then distributed to specific resources. 
+</p>
+<h1>
+    About my Website:
+</h1>
+<p>
+    This website is being distributed via datacenters in the US, Canada, and Europe using a CloudFront distribution. When I need to update my website,
+    I can create a test branch in my AWSCodeCommit repository from my master branch. I then pull my test branch to my local git repo and edit the
+    code via my IDE. Once my code has been verified working locally, I commit it, while creating a comment documenting what the commit is doing,
+    and then push it back into the test branch of my remote repo. I then can review the changes and merge the branches and then I can remove the
+    test branch. I leverage CloudWatch to watch for changes in the test branch and then if there is a change it will call CodePipeline to
+    automatically deploy those changes to the S3 bucket where my test website is hosted. Once I have verified, I can access the website generated
+    by my test branches pipeline I can merge those changes into my Master branch which is then deployed via my Master branches pipeline.
+    Which then deploys my master branch's s3 bucket. I then create a CloudFront distribution and point it to my s3 bucket and create a bucket
+    policy specifying which files I want distributed globally. I then create an A record pointing to my CloudFront alias id in AWS Route 53.
+
+
+</p>
+{% endblock %}
