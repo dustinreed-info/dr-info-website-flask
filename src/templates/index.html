@@ -19,20 +19,4 @@
     repeatable, and consistent.  This eases the burden on releasing software deployments allowing applications to be decoupled
     into microservices and then distributed to specific resources. 
 </p>
-<h1>
-    About my Website:
-</h1>
-<p>
-    This website is being distributed via datacenters in the US, Canada, and Europe using a CloudFront distribution. When I need to update my website,
-    I can create a test branch in my AWSCodeCommit repository from my master branch. I then pull my test branch to my local git repo and edit the
-    code via my IDE. Once my code has been verified working locally, I commit it, while creating a comment documenting what the commit is doing,
-    and then push it back into the test branch of my remote repo. I then can review the changes and merge the branches and then I can remove the
-    test branch. I leverage CloudWatch to watch for changes in the test branch and then if there is a change it will call CodePipeline to
-    automatically deploy those changes to the S3 bucket where my test website is hosted. Once I have verified, I can access the website generated
-    by my test branches pipeline I can merge those changes into my Master branch which is then deployed via my Master branches pipeline.
-    Which then deploys my master branch's s3 bucket. I then create a CloudFront distribution and point it to my s3 bucket and create a bucket
-    policy specifying which files I want distributed globally. I then create an A record pointing to my CloudFront alias id in AWS Route 53.
-
-
-</p>
 {% endblock %}

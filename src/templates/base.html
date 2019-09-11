@@ -10,10 +10,14 @@
             <a href="{{ url_for('index', filename='index.html') }}" class="logo">DustinReed</a>    
             <div class="header-center">
                 <!-- <a class="active" href="#home">Home</a> -->
-                <a href="{{ url_for('contact') }}">Contact</a>
+                <!-- <a href="{{ url_for('contact') }}">Contact</a> -->
                 <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('certifications') }}">Certifications</a>
+                <a href="{{ url_for('projects') }}">Projects</a>
+                <a href="{{ url_for('static', filename='Resume-Reed-Dustin.pdf') }}">Resume</a>
             </div>
         </div>
+        <hr>
         <div class = icons>
             <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}">
             <link rel="apple-touch-icon" sizes="72x72" href="{
@@ -40,12 +44,13 @@
             {% block content %}{% endblock %}
     </body>
     <footer>
+    <hr>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <div class="wrapper">
-            <a target="_blank" href="https://www.dustinreed.info/Resume-Reed-Dustin.pdf"><i class="far fa-2x fa-file"></i></a>
-            <a target="_blank" href="https://www.dustinreed.info/aws-cda-cert.pdf"><i class="fab fa-2x fa-aws"></i></a>
+            <!-- <a target="_blank" href="https://www.dustinreed.info/Resume-Reed-Dustin.pdf"><i class="far fa-2x fa-file"></i></a>
+            <a target="_blank" href="https://www.dustinreed.info/aws-cda-cert.pdf"><i class="fab fa-2x fa-aws"></i></a> -->
             <a target="_blank" href="mailto:dustin@dustinreedinfo"><i class="fas fa-2x fa-envelope"></i></a>
-            <a target="_blank" href="https://www.dustinreed.info/aws-csa-cert.pdf"><i class="fab fa-2x fa-aws"></i></a>
+            <!-- <a target="_blank" href="https://www.dustinreed.info/aws-csa-cert.pdf"><i class="fab fa-2x fa-aws"></i></a> -->
             <a target="_blank" href="https://github.com/dustinreed-info"><i class="fab fa-2x fa-github"></i></a>
             <a target="_blank" href="https://www.linkedin.com/in/dustinreed/"><i class="fab fa-2x fa-linkedin-in"></i></a>
         </div>
