@@ -7,14 +7,12 @@
             <meta name="description" content="Information about Dustin Reed.">
         </div>
         <div class="header">
-            <a href="{{ url_for('index', filename='index.html') }}" class="logo">DustinReed</a>    
+            <a href="{{ url_for('index') }}" class="logo">DustinReed</a>    
             <div class="header-center">
-                <!-- <a class="active" href="#home">Home</a> -->
-                <!-- <a href="{{ url_for('contact') }}">Contact</a> -->
                 <a href="{{ url_for('about') }}">About</a>
                 <a href="{{ url_for('certifications') }}">Certifications</a>
                 <a href="{{ url_for('projects') }}">Projects</a>
-                <a href="{{ url_for('static', filename='Resume-Reed-Dustin.pdf') }}">Resume</a>
+                <a href="{{ url_for('resume') }}">Resume</a>
             </div>
         </div>
         <hr>
