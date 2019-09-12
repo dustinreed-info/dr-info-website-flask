@@ -22,8 +22,8 @@ def contact():
 @application.route('/about')
 def about():
     return render_template('about.html', title="About")
-@application.route('/certifications')
 @application.route('/certs')
+@application.route('/certifications')
 def certifications():
     return render_template('certifications.html', title="Certifications")
 @application.route('/resume')
