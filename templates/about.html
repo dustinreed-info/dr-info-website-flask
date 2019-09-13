@@ -7,8 +7,11 @@
     About my Website:
 </h1>
 <p>
-    This website was developed in Python using the Flask framework.  I am currently thinking about hosting it on AWS ECS, but I have not
-    decided yet as the website is still in development.
+    This website was developed in Python using the Flask framework.  Currently I have my CI/CD pipeline look for changes to my GitHub repository,
+    and automatically deploy the latest version using Elastic Beanstalk and a rolling update with an additional batch.  I have my EC2
+    instances behind an Application Load Balancer located in multiple avaliblity zones with a scaling policy to adjust the number of EC2 instances based
+    upon current resource demand.
+    
     <br>
     Feel Free to check out my projects located above.
 </p>
