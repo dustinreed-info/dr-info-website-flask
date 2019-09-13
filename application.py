@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from flask import render_template, flash, redirect, url_for, send_file
+from flask import render_template, flash, redirect, url_for, send_file, send_from_directory
 
 
 class Config(object):
@@ -9,7 +9,6 @@ class Config(object):
 
 application = Flask(__name__)
 application.config.from_object(Config)
-
 
 @application.route('/')
 @application.route('/index')
@@ -34,6 +33,10 @@ def resume():
 @application.route('/projects')
 def projects():
     return render_template('projects.html', title="Projects")
+@application.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(application.root_path, 'static'),
+        'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 
