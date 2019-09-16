@@ -40,6 +40,24 @@ def resume():
     )
 
 
+@application.route('/aws-cda')
+@application.route('/aws-cda-cert.pdf')
+def aws_cda_cert():
+    return send_file(
+        './static/aws-cda-cert.pdf',
+        attachment_filename="aws-cda-cert.pdf"
+    )
+
+
+@application.route('/aws-csa')
+@application.route('/aws-csa-cert.pdf')
+def aws_csa_cert():
+    return send_file(
+        './static/aws-csa-cert.pdf',
+        attachment_filename="aws-csa-cert.pdf"
+    )
+
+
 @application.route('/projects')
 def projects():
     return render_template('projects.html', title="Projects")
