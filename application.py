@@ -32,6 +32,7 @@ def certifications():
 
 @application.route('/resume')
 @application.route('/Resume')
+@application.route('/Resume-Reed-Dustin')
 @application.route('/Resume-Reed-Dustin.pdf')
 def resume():
     return send_file(
