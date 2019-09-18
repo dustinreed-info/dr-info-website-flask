@@ -30,10 +30,10 @@ def certifications():
     return render_template('certifications.html', title="Certifications")
 
 
-@application.route('/resume')
 @application.route('/Resume')
 @application.route('/Resume-Reed-Dustin')
 @application.route('/Resume-Reed-Dustin.pdf')
+@application.route('/resume')
 def resume():
     return send_file(
         './static/Resume-Reed-Dustin.pdf',
