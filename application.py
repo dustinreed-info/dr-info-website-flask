@@ -51,6 +51,8 @@ def aws_cda_cert():
 
 
 @application.route('/aws-csa')
+# Had  typo in old resume.
+@application.route('/aws-csa.cert.pdf')
 @application.route('/aws-csa-cert.pdf')
 def aws_csa_cert():
     return send_file(
