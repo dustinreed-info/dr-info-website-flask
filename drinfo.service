@@ -3,7 +3,7 @@ Description=Dustin Reed Info
 After=network.target
 
 [Service]
-User=ubuntu
+User=ec2-user
 WorkingDirectory=/home/ec2-user/dr-info-website-flask
 ExecStart=/home/ec2-user/.local/bin/gunicorn -b localhost:8000 -w 4 application
 Restart=always
