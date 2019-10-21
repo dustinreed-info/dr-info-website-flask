@@ -1,0 +1,12 @@
+[Unit]
+Description=Dustin Reed Info
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=~/dr-info-website-flask
+ExecStart=~/dr-info-website-flask/gunicorn -b localhost:8000 -w 4 application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
