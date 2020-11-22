@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=ec2-user
 WorkingDirectory=/tmp/dr-info
-ExecStart=/usr/local/bin/gunicorn -b 0.0.0.0:8000 -w 4 application
+ExecStart=/usr/local/bin/gunicorn -b 0.0.0.0:8000 -w 4 app
 Restart=always
 
 [Install]

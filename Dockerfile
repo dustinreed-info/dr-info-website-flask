@@ -1,6 +1,6 @@
 FROM python:3.6-slim
-ADD . /application
-WORKDIR /application
-RUN pip install flask python-dotenv flask-wtf gunicorn
+ADD . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
 EXPOSE 8000
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
