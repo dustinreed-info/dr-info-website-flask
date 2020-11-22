@@ -8,3 +8,5 @@ markupsafe==1.1.1
 python-dotenv==0.10.3
 werkzeug==0.15.6
 wtforms==2.2.1
+pytest-flask==1.1.0
+pytest==6.1.2
