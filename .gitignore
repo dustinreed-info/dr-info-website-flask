@@ -109,3 +109,6 @@ venv.bak/
 /website
 .ebextensionsions/lb-https-listener.config
 .ebextensions
+
+# local files
+./local
