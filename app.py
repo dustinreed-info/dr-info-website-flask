@@ -33,9 +33,9 @@ def create_app(config_filename=None):
 
 
     @application.route('/Resume')
-    @application.route('/Resume-Reed-Dustin')
     @application.route('/Resume-Reed-Dustin.pdf')
     @application.route('/resume')
+    @application.route('/Resume-Reed-Dustin')
     def resume():
         return send_file(
             './static/Resume-Reed-Dustin.pdf',
