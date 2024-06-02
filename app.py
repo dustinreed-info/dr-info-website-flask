@@ -37,9 +37,10 @@ def create_app(config_filename=None):
     @application.route('/resume')
     @application.route('/Resume-Reed-Dustin')
     def resume():
-        return send_file(
-            './static/Resume-Reed-Dustin.pdf',
-            attachment_filename="Resume-Reed-Dustin.pdf"
+        return send_from_directory(
+            './static',
+            'Resume-Reed-Dustin.pdf',
+            as_attachment=True
         )
 
 
