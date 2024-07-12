@@ -49,7 +49,7 @@ def create_app(config_filename=None):
     def aws_cda_cert():
         return send_file(
             './static/aws-cda-cert.pdf',
-            attachment_filename="aws-cda-cert.pdf"
+            download_name="aws-cda-cert.pdf"
         )
 
 
@@ -60,7 +60,7 @@ def create_app(config_filename=None):
     def aws_csa_cert():
         return send_file(
             './static/aws-csa-cert.pdf',
-            attachment_filename="aws-csa-cert.pdf"
+            download_name="aws-csa-cert.pdf"
         )
 
 
