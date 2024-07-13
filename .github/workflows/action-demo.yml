@@ -15,7 +15,9 @@ jobs:
   build:
     environment: dev
     runs-on: ubuntu-latest
-
+    env:
+      IMAGE: ${{ vars.app_name }}:${{ github.sha }}
+      REPO: ${{ vars.ACR }}.azurecr.io
     steps:
       - uses: actions/checkout@v4
 
@@ -34,4 +36,12 @@ jobs:
 
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: |
+          docker build . --file Dockerfile --tag ${{ env.IMAGE }}
+          docker push ${{ env.REPO }}/${{ env.IMAGE }}
+
+      - name:
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ vars.APP_NAME }}
+          images:  ${{ env.REPO }}/${{ env.IMAGE }}
