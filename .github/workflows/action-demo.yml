@@ -33,16 +33,13 @@ jobs:
         run: | 
           az acr login -n ${{ vars.ACR }}
 
-      - name: build and push
-        run: az acr build --registry ${{ env.REPO }} --image ${{ env.IMAGE }} .
+      - name: Build the Docker image
+        run: |
+          docker build . --tag ${{ env.REPO }}/${{ env.IMAGE }}
 
-      # - name: Build the Docker image
-      #   run: |
-      #     docker build . --file Dockerfile --tag ${{ env.REPO }}/${{ env.IMAGE }}
-
-      # - name: Pushes the Docker image
-      #   run: |
-      #     docker push ${{ env.REPO }}/${{ env.IMAGE }}
+      - name: Pushes the Docker image
+        run: |
+          docker push ${{ env.REPO }}/${{ env.IMAGE }}
 
       - name: Deploys the webapp
         uses: azure/webapps-deploy@v2
