@@ -35,7 +35,7 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --tag ${{ env.REPO }}/${{ env.IMAGE }}
-
+          docker tag ${{ env.REPO }}/${{ env.IMAGE }} ${{ env.REPO }}/${{ vars.app_name }}:latest
       - name: Pushes the Docker image
         run: |
           docker push ${{ env.REPO }}/${{ env.IMAGE }}
