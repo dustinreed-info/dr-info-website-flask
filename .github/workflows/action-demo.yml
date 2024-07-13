@@ -34,7 +34,7 @@ jobs:
           az acr login -n ${{ vars.ACR }}
 
       - name: build and push
-        run: az acr build --registry ${{ env.REPO }} --image ${{ env.IMAGE }}
+        run: az acr build --registry ${{ env.REPO }} --image ${{ env.IMAGE }} .
 
       # - name: Build the Docker image
       #   run: |
