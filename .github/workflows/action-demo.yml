@@ -35,13 +35,13 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag ${{ env.IMAGE }}
+          docker build . --file Dockerfile --tag ${{ env.REPO }}:${{ env.IMAGE }}
 
-      - name: Build the Docker image
+      - name: Pushes the Docker image
         run: |
           docker push ${{ env.REPO }}/${{ env.IMAGE }}
 
-      - name:
+      - name: Deploys the webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ vars.APP_NAME }}
