@@ -29,9 +29,9 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: true
 
-      - name: az cli test
+      - name: Login to ACR
         run: | 
-          az group list
+          az acr login -n ${{ vars.ACR }}
 
       - name: Build the Docker image
         run: |
