@@ -33,11 +33,12 @@ jobs:
         run: | 
           az group list
 
-
-
       - name: Build the Docker image
         run: |
           docker build . --file Dockerfile --tag ${{ env.IMAGE }}
+
+      - name: Build the Docker image
+        run: |
           docker push ${{ env.REPO }}/${{ env.IMAGE }}
 
       - name:
