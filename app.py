@@ -1,6 +1,7 @@
 import os
 import json
 import boto3
+from auth import requires_auth
 from flask import Flask, request
 from flask import render_template, flash, redirect, url_for
 from flask import send_file, send_from_directory
@@ -129,12 +130,14 @@ def create_app(config_filename=None):
 
     @application.route('/analytics')
     @application.route('/stats')
+    @requires_auth
     def analytics():
         """Display visitor analytics dashboard"""
         stats = tracker.get_stats_for_template()
         return render_template('analytics.html', title="Analytics", **stats)
 
     @application.route('/api/stats')
+    @requires_auth
     def visitor_stats():
         """JSON API endpoint for visitor statistics"""
         return tracker.get_stats_for_api()
