@@ -45,22 +45,23 @@ def create_app(config_filename=None):
 
 
     @application.route('/aws-cda')
-    @application.route('/aws-cda-cert.pdf')
+    @application.route('/static/aws-cda-cert.pdf')
     def aws_cda_cert():
-        return send_file(
-            './static/aws-cda-cert.pdf',
-            attachment_filename="aws-cda-cert.pdf"
+        return send_from_directory(
+            'static',
+            'aws-cda-cert.pdf',
+            as_attachment=True
         )
 
-
     @application.route('/aws-csa')
-    # Had  typo in old resume.
+    # Had typo in old resume.
     @application.route('/aws-csa.cert.pdf')
-    @application.route('/aws-csa-cert.pdf')
+    @application.route('/static/aws-csa-cert.pdf')
     def aws_csa_cert():
-        return send_file(
-            './static/aws-csa-cert.pdf',
-            attachment_filename="aws-csa-cert.pdf"
+        return send_from_directory(
+            'static',
+            'aws-csa-cert.pdf',
+            as_attachment=True
         )
 
 
