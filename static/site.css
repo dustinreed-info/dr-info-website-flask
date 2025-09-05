@@ -1152,8 +1152,8 @@ a:hover {
 }
 
 .metric-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     display: flex;
@@ -1185,19 +1185,19 @@ a:hover {
     font-size: var(--font-size-3xl);
     font-weight: 700;
     margin: 0;
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
 }
 
 .metric-content p {
     margin: var(--spacing-xs) 0 0 0;
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     font-size: var(--font-size-sm);
 }
 
 .metric-change {
     display: inline-block;
-    background: var(--bg-tertiary);
-    color: var(--text-muted);
+    background: var(--dark-bg-tertiary);
+    color: var(--dark-text-muted);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-xs);
@@ -1212,7 +1212,7 @@ a:hover {
 .section-title-small {
     font-size: var(--font-size-xl);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
     margin-bottom: var(--spacing-lg);
     text-align: center;
 }
@@ -1224,8 +1224,8 @@ a:hover {
 }
 
 .month-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     text-align: center;
@@ -1235,7 +1235,7 @@ a:hover {
 .month-card h4 {
     font-size: var(--font-size-lg);
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--dark-text-primary);
     margin-bottom: var(--spacing-md);
 }
 
@@ -1253,19 +1253,19 @@ a:hover {
 
 .stat-label {
     font-size: var(--font-size-sm);
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     margin-bottom: var(--spacing-xs);
 }
 
 .stat-value {
     font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
 }
 
 .daily-activity {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     overflow-x: auto;
@@ -1289,7 +1289,7 @@ a:hover {
 .bar-container {
     width: 100%;
     height: 200px;
-    background: var(--bg-tertiary);
+    background: var(--dark-bg-tertiary);
     border-radius: var(--border-radius-sm);
     position: relative;
     margin-bottom: var(--spacing-sm);
@@ -1307,7 +1307,7 @@ a:hover {
 
 .day-label {
     font-size: var(--font-size-xs);
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     text-align: center;
     margin-bottom: var(--spacing-xs);
 }
@@ -1315,12 +1315,12 @@ a:hover {
 .day-stats {
     text-align: center;
     font-size: var(--font-size-xs);
-    color: var(--text-muted);
+    color: var(--dark-text-muted);
 }
 
 .top-ips-table {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-lg);
     overflow: hidden;
 }
@@ -1330,10 +1330,10 @@ a:hover {
     grid-template-columns: 1.5fr 1fr 1fr 1fr 0.8fr 1fr;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
+    background: var(--dark-bg-tertiary);
+    border-bottom: 1px solid var(--dark-border-color);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
     font-size: var(--font-size-sm);
 }
 
@@ -1342,12 +1342,12 @@ a:hover {
     grid-template-columns: 1.5fr 1fr 1fr 1fr 0.8fr 1fr;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--dark-border-color);
     transition: background-color 0.2s ease;
 }
 
 .table-row:hover {
-    background: var(--bg-secondary);
+    background: var(--dark-bg-tertiary);
 }
 
 .table-row:last-child {
@@ -1357,11 +1357,11 @@ a:hover {
 .ip-address {
     font-family: 'Courier New', monospace;
     font-size: var(--font-size-sm);
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
 }
 
 .browser, .os, .device {
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
     font-size: var(--font-size-sm);
 }
 
@@ -1371,7 +1371,7 @@ a:hover {
 }
 
 .date {
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     font-size: var(--font-size-sm);
 }
 
@@ -1383,8 +1383,8 @@ a:hover {
 }
 
 .ua-stat-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     display: flex;
@@ -1416,12 +1416,12 @@ a:hover {
     font-size: var(--font-size-base);
     font-weight: 600;
     margin: 0;
-    color: var(--text-primary);
+    color: var(--dark-text-primary);
 }
 
 .ua-content p {
     margin: var(--spacing-xs) 0 0 0;
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     font-size: var(--font-size-sm);
 }
 
@@ -1435,7 +1435,7 @@ a:hover {
     align-items: center;
     gap: var(--spacing-sm);
     padding: var(--spacing-sm);
-    background: var(--bg-secondary);
+    background: var(--dark-bg-secondary);
     border-radius: var(--border-radius-md);
 }
 
@@ -1445,46 +1445,6 @@ a:hover {
 }
 
 .info-item span {
-    color: var(--text-secondary);
+    color: var(--dark-text-secondary);
     font-size: var(--font-size-sm);
-}
-
-/* Dark mode styles for analytics */
-@media (prefers-color-scheme: dark) {
-    .metric-card {
-        background: var(--dark-bg-primary);
-        border-color: var(--dark-border-color);
-    }
-
-    .month-card {
-        background: var(--dark-bg-primary);
-        border-color: var(--dark-border-color);
-    }
-
-    .daily-activity {
-        background: var(--dark-bg-primary);
-        border-color: var(--dark-border-color);
-    }
-
-    .top-ips-table {
-        background: var(--dark-bg-primary);
-        border-color: var(--dark-border-color);
-    }
-
-    .table-header {
-        background: var(--dark-bg-secondary);
-        border-color: var(--dark-border-color);
-    }
-
-    .table-row {
-        border-color: var(--dark-border-color);
-    }
-
-    .table-row:hover {
-        background: var(--dark-bg-secondary);
-    }
-
-    .bar-container {
-        background: var(--dark-bg-tertiary);
-    }
 }
