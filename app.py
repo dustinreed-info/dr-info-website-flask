@@ -124,7 +124,8 @@ def create_app(config_filename=None):
             # Get real client IP, accounting for proxies
             client_ip = get_real_client_ip(request)
             user_agent = request.headers.get('User-Agent')
-            tracker.track_visitor(client_ip, user_agent)
+            page_visited = request.endpoint
+            tracker.track_visitor(client_ip, user_agent, page_visited)
 
     @application.route('/analytics')
     @application.route('/stats')
