@@ -1,0 +1,316 @@
+# cursor.rules — tuned to the user's style
+# Purpose: Make generated code match how *you* naturally write and iterate.
+
+version: 1
+meta:
+  author: "you"
+  intent: "Readable, explicit, debuggable code with light logging and fast iteration."
+  priorities:
+    - correctness
+    - clarity
+    - maintainability
+    - performance
+
+defaults:
+  - "Prefer explicit names for variables, functions, entities, and IDs."
+  - "Add concise comments only where non-obvious; avoid wall-of-text docs."
+  - "Favor small, composable functions/automations over giant blocks."
+  - "Add lightweight logging for key branches/edges to aid debugging."
+  - "Alphabetize lists/keys when practical (sensors, entity lists, selectors)."
+  - "Prefer early returns to reduce nesting."
+  - "No hidden globals or magic numbers; explain constants inline or name them."
+  - "When tradeoffs matter (e.g., mode: restart vs queued), state the reasoning in a one-line comment."
+
+#######################################################################
+# PYTHON
+#######################################################################
+python:
+  style:
+    - "Follow PEP 8; 4 spaces; target ~88 char lines."
+    - "Use type hints for public functions, dataclasses for structured data."
+    - "Organize imports: stdlib → third-party → local. No wildcard imports."
+    - "Prefer pathlib, logging, and context managers; avoid bare prints in libs."
+    - "Use explicit initialization for counters/flags (e.g., current = 0)."
+    - "Prefer clear control flow over clever one-liners."
+  logging:
+    - "Use the logging module with module-level logger = logging.getLogger(__name__)."
+    - "Log at DEBUG for state transitions and key branches; INFO for high-level steps; WARNING/ERROR for issues."
+    - "Include minimal context in logs (ids, sizes, thresholds)."
+  error_handling:
+    - "Validate inputs early; raise ValueError/TypeError with actionable messages."
+    - "Wrap external I/O with try/except and log failures succinctly."
+  pandas_numerics:
+    - "Check for empty DataFrames or None before operating."
+    - "Name intermediate columns clearly; avoid chained assignment."
+    - "Break complex transforms into small, named steps."
+  structure:
+    - "Each function does one thing; small helpers allowed."
+    - "Docstrings describe inputs, outputs, side-effects, and raises."
+
+  # Template the model can imitate for new functions
+  function_template: |
+    def {name}({params}) -> {rtype}:
+        """
+        {summary}
+
+        Args:
+            {args}
+
+        Returns:
+            {returns}
+
+        Raises:
+            {raises}
+        """
+        # Validate
+        {prechecks}
+
+        # Core logic
+        {logic}
+
+        # Optional debug
+        logger.debug("{{event}}", extra={{"k": "v"}})
+
+        return {result}
+
+#######################################################################
+# HOME ASSISTANT / YAML
+#######################################################################
+home_assistant:
+  general:
+    - "Always include alias, description (if needed), and a clear, stable id per trigger branch."
+    - "Explicitly set mode; default to mode: restart unless a queue is required."
+    - "Keep triggers/conditions/actions easy to scan; use choose for branching."
+    - "Alphabetize entity lists and options when it helps readability."
+    - "Name helpers and scripts predictably (domain_area_purpose)."
+  safety:
+    - "Guard against flapping inputs with debounce/delay or state-duration checks."
+    - "Comment once on why a guard exists (e.g., 'debounce physical rocker')."
+  logging:
+    - "Use logbook/log_message or persistent_notification for key paths when debugging."
+    - "Log trigger id and final action path."
+  structure:
+    order: ["alias", "description", "mode", "triggers", "conditions", "actions"]
+    prefer_choose_blocks: true
+  defaults:
+    mode: "restart"
+    trace: "enabled_on_demand"
+
+  # Snippet patterns Cursor should follow
+  snippets:
+    toggle_with_debounce: |
+      alias: {alias}
+      description: "{desc}"
+      mode: {mode}
+      triggers:
+        - trigger: state
+          entity_id: {entity}
+          from: "off"
+          to: "on"
+          id: "on"
+        - trigger: state
+          entity_id: {entity}
+          from: "on"
+          to: "off"
+          id: "off"
+      conditions: []
+      actions:
+        - choose:
+            - conditions:
+                - condition: trigger
+                  id: "on"
+                - condition: state
+                  entity_id: {guard_entity}
+                  state: "{guard_state}"
+                  for: "{guard_for}"   # debounce/guard window
+              sequence:
+                - service: logbook.log
+                  data:
+                    name: "{alias}"
+                    message: "Triggered: on | guard OK"
+                - service: {on_service}
+                  target:
+                    entity_id: {on_target}
+            - conditions:
+                - condition: trigger
+                  id: "off"
+              sequence:
+                - service: logbook.log
+                  data:
+                    name: "{alias}"
+                    message: "Triggered: off"
+                - service: {off_service}
+                  target:
+                    entity_id: {off_target}
+
+#######################################################################
+# SQL
+#######################################################################
+sql:
+  formatting:
+    - "Uppercase keywords; one major clause per line."
+    - "Align JOINs and indent ON conditions."
+    - "Name CTEs descriptively; avoid nesting CTEs needlessly."
+    - "Use snake_case for identifiers; no ambiguous SELECT * in production."
+  safety:
+    - "Be explicit about NULL handling and joins."
+    - "When filtering by date/time, specify timezone/assumptions."
+  example_template: |
+    WITH base AS (
+      SELECT
+        id,
+        created_at,
+        metric_value
+      FROM analytics.events
+      WHERE created_at >= DATE('{start_date}')
+    )
+    SELECT
+      id,
+      COUNT(*) AS event_count
+    FROM base
+    GROUP BY id
+    ORDER BY event_count DESC;
+
+#######################################################################
+# FLASK
+#######################################################################
+flask:
+  structure:
+    - "Use Blueprint for route organization"
+    - "Keep route handlers thin; delegate business logic to service functions"
+    - "Use Flask-WTF for form handling and CSRF protection"
+  templates:
+    - "Use Jinja2 template inheritance with base.html"
+    - "Pass minimal data to templates; avoid complex logic in templates"
+  error_handling:
+    - "Use Flask error handlers for consistent error pages"
+    - "Log errors with request context for debugging"
+  configuration:
+    - "Use environment variables for configuration"
+    - "Separate config for development, testing, and production"
+    - "Use Flask-Config or similar for config management"
+
+#######################################################################
+# TESTING
+#######################################################################
+testing:
+  python:
+    - "Use pytest fixtures for test setup"
+    - "Test edge cases and error conditions"
+    - "Mock external dependencies"
+    - "Use descriptive test names that explain the scenario"
+  flask:
+    - "Use Flask test client for integration tests"
+    - "Test both success and error response codes"
+    - "Test form validation and CSRF protection"
+    - "Use test database for database operations"
+  structure:
+    - "Organize tests in tests/ directory mirroring source structure"
+    - "Use conftest.py for shared fixtures"
+    - "Separate unit tests from integration tests"
+
+#######################################################################
+# SECURITY
+#######################################################################
+security:
+  flask:
+    - "Use environment variables for secrets"
+    - "Enable CSRF protection on forms"
+    - "Validate and sanitize all user inputs"
+    - "Use HTTPS in production"
+    - "Set secure session cookies"
+    - "Use Flask-Limiter for rate limiting"
+  general:
+    - "Never commit secrets or API keys"
+    - "Use .env files for local development"
+    - "Validate file uploads and limit file sizes"
+    - "Use parameterized queries to prevent SQL injection"
+
+#######################################################################
+# DOCS & MARKDOWN
+#######################################################################
+docs:
+  style:
+    - "Keep docs concise with crisp headings and short lists."
+    - "Prefer small 'Why/How/Gotchas' sections over prose."
+    - "Include exact dates when clarifying timelines."
+  templates:
+    decision_record: |
+      # Decision: {title}
+      **Date:** {date}
+      **Context:** {context}
+      **Decision:** {decision}
+      **Why this:** {why}
+      **Tradeoffs:** {tradeoffs}
+      **Next steps:** {next}
+
+#######################################################################
+# GIT COMMITS (you asked to define these)
+#######################################################################
+git_commits:
+  convention: "Conventional Commits"
+  format: |
+    <type>(<scope>): <summary>
+    
+    <body with bullet points>
+  rules:
+    - "ALWAYS use this exact format with header and body separated by blank line"
+    - "Header: <type>(<scope>): <summary> - ≤ 50 chars total"
+    - "Body: Use bullet points (-) for multiple changes or context"
+    - "Types: feat, fix, refactor, perf, test, chore, docs, ci, build, style"
+    - "Scope: ui, css, html, flask, config, deps, assets, docs"
+    - "Summary: present tense, imperative mood, no trailing period"
+    - "Body lines: ≤ 72 chars per line"
+    - "Include reasoning/context in body when helpful"
+    - "Use 'BREAKING CHANGE:' in footer if applicable"
+  website_scopes:
+    - "ui: user interface changes (templates, styling, layout)"
+    - "css: stylesheet modifications"
+    - "html: template structure changes"
+    - "flask: backend application logic"
+    - "config: configuration files, environment setup"
+    - "deps: dependency updates, package changes"
+    - "assets: static files (images, icons, fonts)"
+    - "docs: documentation updates"
+  examples:
+    - |
+      feat(ui): add modern card layout to projects page
+      
+      - Implement responsive card grid for project showcase
+      - Add hover effects and consistent spacing
+      - Improve visual hierarchy with icons and tech tags
+    - |
+      fix(css): resolve HTML5 icon color inconsistency
+      
+      - Remove custom orange color from HTML5 icon
+      - Use consistent primary color with other tech icons
+      - Improves visual consistency across tech stack
+    - |
+      refactor(flask): enable conditional debug mode
+      
+      - Add environment-based debug mode detection
+      - Only enable debug locally, disable in production
+      - Improves security and development experience
+    - |
+      fix(assets): replace missing infrastructure icon
+      
+      - Change from fas fa-server to fas fa-tools
+      - Resolves missing icon display issue
+      - Better represents Infrastructure as Code concept
+
+#######################################################################
+# REVIEW CHECKLIST (applied to all generated code)
+#######################################################################
+review_checklist:
+  - "Names are explicit; no cryptic abbreviations."
+  - "Comments explain only the non-obvious; no narration."
+  - "Logging covers key branches/guards without spam."
+  - "Edge cases considered (empty inputs, flapping states, nulls)."
+  - "Lists/keys alphabetized where it aids scanning."
+  - "Home Assistant: alias/id/mode present; debounce or guard if needed."
+  - "Python: type hints + docstrings on public funcs; imports ordered."
+  - "SQL: no SELECT *; joins & null semantics explicit."
+  - "Flask: thin route handlers, proper error handling, CSRF protection."
+  - "Security: no secrets in code, input validation, secure defaults."
+  - "Testing: edge cases covered, proper mocking, descriptive test names."
+  - "Commit message follows convention and explains *why*, not just *what*."
