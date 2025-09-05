@@ -3,5 +3,90 @@
 {{ title }} - Dustin Reed Info
 {% endblock %}
 {% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">
+                Let's discuss your next project or collaboration opportunity
+            </p>
+        </div>
 
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>Email</h3>
+                            <p>For professional inquiries and collaboration opportunities</p>
+                            <a href="mailto:dustin@dustinreedinfo">dustin@dustinreedinfo</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>LinkedIn</h3>
+                            <p>Connect with me professionally and explore my network</p>
+                            <a href="https://www.linkedin.com/in/dustinreed/" target="_blank">linkedin.com/in/dustinreed</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="method-content">
+                            <h3>GitHub</h3>
+                            <p>Check out my open source projects and contributions</p>
+                            <a href="https://github.com/dustinreed-info" target="_blank">github.com/dustinreed-info</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-availability">
+                    <h3>Response Time</h3>
+                    <p>
+                        I typically respond to messages within 24-48 hours. For urgent matters,
+                        please include "URGENT" in your subject line.
+                    </p>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <form class="contact-form" action="mailto:dustin@dustinreedinfo" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

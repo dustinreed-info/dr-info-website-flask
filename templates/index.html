@@ -3,22 +3,86 @@
 {{ title }} - Dustin Reed Info
 {% endblock %}
 {% block content %}
-<h1>
-    About Me:
-</h1>
-<p>
-    As a Sr. DevOps Engineer with over a decade of experience in enterprise IT, 
-    I have a passion for computing that began at a young age. From creating my first 
-    application in QBasic at age 8 to developing text-based games on my TI-83 calculator 
-    in high school, I have always been drawn to programming. My background in IT Operations 
-    has allowed me to leverage my programming knowledge to automate daily tasks, starting 
-    with batch scripts and eventually mastering PowerShell and Python.
-    <br><br>
-    Today, I am focused on utilizing DevOps toolchains and methodologies to design infrastructure 
-    as code and track changes with version control. By implementing CI/CD pipelines, 
-    I can deploy applications to cloud platforms in a fault-tolerant, scalable, and 
-    distributed manner. This approach reduces risk and complexity for software deployments, 
-    enabling businesses to quickly adapt to changing market conditions and be more agile. 
-    Be sure to check out my Projects section for examples of my work.
-</p>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Dustin Reed</h1>
+        <p class="subtitle">Senior DevOps Engineer & Cloud Architect</p>
+        <p class="hero-description">
+            With over a decade of experience in enterprise IT, I specialize in cloud infrastructure,
+            DevOps automation, and scalable application deployment. Passionate about leveraging modern
+            technologies to solve complex challenges.
+        </p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                <i class="fas fa-code"></i>
+                View My Work
+            </a>
+            <a href="{{ url_for('resume') }}" class="btn btn-secondary">
+                <i class="fas fa-download"></i>
+                Download Resume
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">
+                A journey from early programming experiments to enterprise DevOps solutions
+            </p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    My passion for computing began at a young age, starting with my first application
+                    in QBasic at age 8 and evolving into creating text-based games on my TI-83 calculator
+                    in high school. This early curiosity laid the foundation for my career in technology.
+                </p>
+
+                <p>
+                    My background in IT Operations has allowed me to leverage programming knowledge to
+                    automate daily tasks, evolving from batch scripts to mastering PowerShell and Python.
+                    Today, I focus on utilizing DevOps toolchains and methodologies to design infrastructure
+                    as code and track changes with version control.
+                </p>
+
+                <p>
+                    By implementing CI/CD pipelines, I can deploy applications to cloud platforms in a
+                    fault-tolerant, scalable, and distributed manner. This approach reduces risk and
+                    complexity for software deployments, enabling businesses to quickly adapt to changing
+                    market conditions and be more agile.
+                </p>
+            </div>
+
+            <div class="about-highlights">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Expertise</h3>
+                    <p>AWS, Azure, and multi-cloud architectures</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>DevOps & Automation</h3>
+                    <p>CI/CD pipelines, Infrastructure as Code, monitoring</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Programming</h3>
+                    <p>Python, PowerShell, and modern development practices</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -3,43 +3,176 @@
 {{ title }} - Dustin Reed Info
 {% endblock %}
 {% block content %}
-<!-- <h1>
-    Projects:
-</h1> -->
-<h3>
-    <a href="https://github.com/dustinreed-info/dr-info-website-flask">Dustin Reed - Info</a>
-</h3>
-<p>
-    The source code for the website you are looking at right now.  Built in Python using Flask and Jinja2.
-</p>
-<h3>
-    <a href="https://github.com/dustinreed-info/dr-terraform">Dustin Reed - Info Terraform</a>
-</h3>
-<p>
-    Code that will deploy my website to AWS using Terraform.
-</p>
-<h3>
-    <a href="https://github.com/dustinreed-info/aws-python-tools">Web-Sync</a>
-</h3>
-<p>
-    Web-Sync is a program that wil sync a local directory to an s3 bucket and can configure Route 53 DNS records and Cloudfront to create and distribute secure static website hosted on specified s3 bucket.
-</p>
-<h3>
-    <a href="https://github.com/dustinreed-info/docker-compose">Docker Compose</a>
-</h3>
-<p>
-    Docker Compose file used to define my home automation infrastructure as code.
-</p>
-<h3>
-    <a href="https://github.com/dustinreed-info/Ansible">Ansible</a>
-</h3>
-<p>
-    Ansible playbooks used to stand up my Docker servers.
-</p>
-<h3>
-    <a href="https://github.com/dustinreed-info/AppDaemon-Scripts">AppDaemon Scripts</a>
-</h3>
-<p>
-    Python script that includes a function to change lights color temperature and brightness based upon time of day and an adjustable fade light in function. 
-</p>
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">My Projects</h2>
+            <p class="section-subtitle">
+                A showcase of my work in DevOps, cloud infrastructure, and automation
+            </p>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/dr-info-website-flask" target="_blank">
+                        Dustin Reed - Info Website
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    The source code for this very website! Built using Python Flask framework with modern HTML5,
+                    CSS3, and responsive design principles.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/dr-info-website-flask" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/dr-terraform" target="_blank">
+                        Infrastructure as Code
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    Terraform configurations for deploying this website and other applications to AWS.
+                    Demonstrates Infrastructure as Code best practices with modular design.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Terraform</span>
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">Infrastructure as Code</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/dr-terraform" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/aws-python-tools" target="_blank">
+                        Web-Sync Tool
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    A comprehensive tool for syncing local directories to S3 buckets with automatic Route 53
+                    DNS configuration and CloudFront distribution setup for secure static websites.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">AWS S3</span>
+                    <span class="tech-tag">CloudFront</span>
+                    <span class="tech-tag">Route 53</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/aws-python-tools" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/docker-compose" target="_blank">
+                        Home Automation Stack
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    Docker Compose configuration defining a complete home automation infrastructure.
+                    Includes Home Assistant, MQTT broker, and various smart home integrations.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Docker Compose</span>
+                    <span class="tech-tag">Home Assistant</span>
+                    <span class="tech-tag">IoT</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/docker-compose" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/Ansible" target="_blank">
+                        Ansible Automation
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    Ansible playbooks for automated server provisioning and configuration management.
+                    Used to set up and maintain Docker servers with consistent configurations.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Ansible</span>
+                    <span class="tech-tag">Automation</span>
+                    <span class="tech-tag">Configuration Management</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/Ansible" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="project-title">
+                    <a href="https://github.com/dustinreed-info/AppDaemon-Scripts" target="_blank">
+                        Smart Home Scripts
+                        <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;"></i>
+                    </a>
+                </h3>
+                <p class="project-description">
+                    Python scripts for Home Assistant AppDaemon that automate lighting based on time of day,
+                    including dynamic color temperature and brightness adjustments for circadian rhythm support.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Home Assistant</span>
+                    <span class="tech-tag">AppDaemon</span>
+                    <span class="tech-tag">Smart Home</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/dustinreed-info/AppDaemon-Scripts" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
