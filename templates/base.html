@@ -1,55 +1,99 @@
-<html>
-    <head>
-        <div class = meta>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="keywords" content="AWS,Dustin Reed,DevOps,Cloud Architect,Cloud Engineer, Cloud Developer, Python, Azure">
-            <meta name="description" content="Information about Dustin Reed.">
-        </div>
-        <div class="header">
-            <a href="{{ url_for('index') }}" class="logo">DustinReed</a>    
-            <div class="header-center">
-                <a href="{{ url_for('about') }}">About</a>
-                <a href="{{ url_for('certifications') }}">Certifications</a>
-                <a href="{{ url_for('projects') }}">Projects</a>
-                <a href="{{ url_for('resume') }}">Resume</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="AWS,Dustin Reed,DevOps,Cloud Architect,Cloud Engineer, Cloud Developer, Python, Azure">
+    <meta name="description" content="Information about Dustin Reed.">
+
+    <!-- Favicon and Icons -->
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#566a6c">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+
+    <title>{% block title %}{% endblock %} - Dustin Reed</title>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <span class="logo-text">Dustin Reed</span>
+                </a>
+
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="nav-menu" id="nav-menu">
+                    <a href="{{ url_for('about') }}" class="nav-link">About</a>
+                    <a href="{{ url_for('certifications') }}" class="nav-link">Certifications</a>
+                    <a href="{{ url_for('projects') }}" class="nav-link">Projects</a>
+                    <a href="{{ url_for('resume') }}" class="nav-link">Resume</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="social-links">
+                <a href="mailto:dustin@dustinreedinfo" class="social-link" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+                <a href="https://github.com/dustinreed-info" target="_blank" class="social-link" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/dustinreed/" target="_blank" class="social-link" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2024 Dustin Reed. All rights reserved.</p>
             </div>
         </div>
-        <hr>
-        <div class = icons>       
-            <link rel="apple-touch-icon" sizes="72x72" href="{
-                { url_for('static', filename='apple-touch-icon.png') }
-            }"/>
-            <link rel="icon" type="image/png" sizes="32x32" href="{
-                { url_for('static', filename='favicon-32x32.png') }
-            }"/>
-            <link rel="icon" type="image/png" sizes="16x16" href="{
-                { url_for('static', filename='favicon-16x16.png') }
-            }"/>
-            <link rel="manifest" href="{
-                { url_for('static', filename='site.webmanifest') }
-            }"/>
-            <link rel="mask-icon" href="{
-                { url_for('static', filename='safari-pinned-tab.svg') }
-            }" color="#5bbad5"/>
-        </div>
-        <title>
-            {% block title %}{% endblock %}
-        </title>
-    </head>
-    <body>
-            {% block content %}{% endblock %}
-    </body>
-    <footer>
-    <hr>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-        <div class="wrapper">
-            <!-- <a target="_blank" href="https://www.dustinreed.info/Resume-Reed-Dustin.pdf"><i class="far fa-2x fa-file"></i></a>
-            <a target="_blank" href="https://www.dustinreed.info/aws-cda-cert.pdf"><i class="fab fa-2x fa-aws"></i></a> -->
-            <a target="_blank" href="mailto:dustin@dustinreedinfo"><i class="fas fa-2x fa-envelope"></i></a>
-            <!-- <a target="_blank" href="https://www.dustinreed.info/aws-csa-cert.pdf"><i class="fab fa-2x fa-aws"></i></a> -->
-            <a target="_blank" href="https://github.com/dustinreed-info"><i class="fab fa-2x fa-github"></i></a>
-            <a target="_blank" href="https://www.linkedin.com/in/dustinreed/"><i class="fab fa-2x fa-linkedin-in"></i></a>
-        </div>
     </footer>
+
+    <script>
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
 </html>

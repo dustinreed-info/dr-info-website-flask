@@ -3,32 +3,136 @@
 {{ title }} - Dustin Reed Info
 {% endblock %}
 {% block content %}
-<h1>
-    About my Website:
-</h1>
-<p>
-    My website was developed using Python and the Flask web framework. 
-    I have implemented a CI/CD pipeline that automatically deploys the 
-    latest version of my website by monitoring changes to my GitHub repository. 
-    The deployment is handled by Elastic Beanstalk, which provides a rolling update 
-    with an additional batch to ensure high availability and zero downtime. 
-    To further improve availability, I have set up EC2 instances across multiple 
-    availability zones and placed them behind an Application Load Balancer. 
-    The scaling policy is set up to adjust the number of instances based on 
-    the current resource demand to ensure efficient resource utilization.
-    <br> <br>
-    Please feel free to explore my projects located above and 
-    don't hesitate to reach out to me for any feedback or collaboration opportunities.
-</p>
-<!-- 
-<h1>
-    Contact Information:
-</h1>
-<p>
-    Email: <a href="mailto:dustin@dustinreedinfo">dustin@dustinreed.info</a>
-</p> -->
-<!-- <br> -->
-<!-- <p>
-    Linkedin: <a href="https://www.linkedin.com/in/dustinreed/">Dustin</a>
-</p> -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">About This Website</h2>
+            <p class="section-subtitle">
+                Built with modern web technologies and deployed on AWS infrastructure
+            </p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    This website was developed using Python and the Flask web framework, showcasing
+                    modern web development practices with responsive design and clean architecture.
+                    The entire site is built with semantic HTML5, modern CSS with CSS Grid and Flexbox,
+                    and follows accessibility best practices.
+                </p>
+
+                <p>
+                    I've implemented a robust CI/CD pipeline that automatically deploys the latest
+                    version of my website by monitoring changes to my GitHub repository. The deployment
+                    is handled by AWS Elastic Beanstalk, which provides rolling updates with an
+                    additional batch to ensure high availability and zero downtime.
+                </p>
+
+                <p>
+                    To further enhance availability and performance, I've set up EC2 instances across
+                    multiple availability zones behind an Application Load Balancer. The auto-scaling
+                    policy dynamically adjusts the number of instances based on current resource demand,
+                    ensuring efficient resource utilization and cost optimization.
+                </p>
+
+                <div class="tech-stack">
+                    <h3>Technology Stack</h3>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-flask"></i>
+                            <span>Flask</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-docker"></i>
+                            <span>Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-highlights">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>CI/CD Pipeline</h3>
+                    <p>Automated deployment with GitHub integration and rolling updates</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>High Availability</h3>
+                    <p>Multi-AZ deployment with load balancing and auto-scaling</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Modern, mobile-first approach with accessibility in mind</p>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Clean Code</h3>
+                    <p>Semantic HTML, modern CSS, and maintainable architecture</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">
+                Interested in collaboration or have questions about my work?
+            </p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email Me</h3>
+                <p>Feel free to reach out for collaboration opportunities or technical discussions.</p>
+                <a href="mailto:dustin@dustinreedinfo" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Send Email
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                <h3>Connect on LinkedIn</h3>
+                <p>Let's connect professionally and explore potential opportunities.</p>
+                <a href="https://www.linkedin.com/in/dustinreed/" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-linkedin"></i>
+                    View Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

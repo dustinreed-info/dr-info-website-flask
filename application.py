@@ -88,4 +88,10 @@ def create_app(config_filename=None):
 application = create_app()
 
 if __name__ == "__main__":
-    application.run("0.0.0.0")
+    # Only enable debug mode when running locally/development
+    debug_mode = (
+        os.environ.get('FLASK_ENV') == 'development' or 
+        os.environ.get('FLASK_DEBUG') == '1' or
+        not os.environ.get('FLASK_ENV')  # Default to debug if no environment set
+    )
+    application.run("0.0.0.0", debug=debug_mode)
