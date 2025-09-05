@@ -4,6 +4,8 @@ import boto3
 from flask import Flask, request
 from flask import render_template, flash, redirect, url_for
 from flask import send_file, send_from_directory
+from visitor_tracking import tracker
+from datetime import datetime, timedelta
 
 
 def create_app(config_filename=None):
@@ -93,64 +95,48 @@ def create_app(config_filename=None):
         print(f"Warning: Could not initialize S3 client: {e}")
         s3_client = None
 
-    def load_visitor_count():
-        """Load visitor count from S3"""
-        if not s3_client:
-            return 0
+    def get_real_client_ip(request):
+        """Get the real client IP address, accounting for proxies"""
+        # Check for X-Forwarded-For header (most common with proxies/load balancers)
+        x_forwarded_for = request.headers.get('X-Forwarded-For')
+        if x_forwarded_for:
+            # X-Forwarded-For can contain multiple IPs, take the first (original client)
+            client_ip = x_forwarded_for.split(',')[0].strip()
+            return client_ip
 
-        try:
-            response = s3_client.get_object(Bucket=S3_BUCKET, Key=VISITOR_COUNT_KEY)
-            body = response['Body']
-            content = body.read()
-            if isinstance(content, bytes):
-                content = content.decode('utf-8')
-            data = json.loads(content)
-            return data.get('count', 0)
-        except s3_client.exceptions.NoSuchKey:
-            # File doesn't exist yet, start with 0
-            return 0
-        except Exception as e:
-            print(f"Warning: Could not load visitor count from S3: {e}")
-            return 0
+        # Check for X-Real-IP header (nginx)
+        x_real_ip = request.headers.get('X-Real-IP')
+        if x_real_ip:
+            return x_real_ip.strip()
 
-    def save_visitor_count(count):
-        """Save visitor count to S3"""
-        if not s3_client:
-            return
+        # Check for CF-Connecting-IP header (Cloudflare)
+        cf_connecting_ip = request.headers.get('CF-Connecting-IP')
+        if cf_connecting_ip:
+            return cf_connecting_ip.strip()
 
-        try:
-            data = {'count': count}
-            json_string = json.dumps(data)
-            s3_client.put_object(
-                Bucket=S3_BUCKET,
-                Key=VISITOR_COUNT_KEY,
-                Body=json_string,
-                ContentType='application/json'
-            )
-        except Exception as e:
-            print(f"Warning: Could not save visitor count to S3: {e}")
+        # Fall back to remote_addr
+        return request.remote_addr
 
     @application.before_request
     def track_visitors():
-        """Track unique visitors (basic IP-based tracking)"""
+        """Track unique visitors with IP-based counting and user agent analysis"""
         if request.endpoint and request.endpoint not in ['static', 'favicon']:
-            client_ip = request.remote_addr
-            if client_ip:
-                current_count = load_visitor_count()
-                # For simplicity, just increment on each request
-                # In production, you'd want more sophisticated unique visitor tracking
-                save_visitor_count(current_count + 1)
+            # Get real client IP, accounting for proxies
+            client_ip = get_real_client_ip(request)
+            user_agent = request.headers.get('User-Agent')
+            tracker.track_visitor(client_ip, user_agent)
 
+    @application.route('/analytics')
     @application.route('/stats')
+    def analytics():
+        """Display visitor analytics dashboard"""
+        stats = tracker.get_stats_for_template()
+        return render_template('analytics.html', title="Analytics", **stats)
+
+    @application.route('/api/stats')
     def visitor_stats():
-        """Hidden endpoint to view visitor statistics"""
-        count = load_visitor_count()
-        return {
-            'visitor_count': count,
-            'message': f'Total visitors: {count}',
-            'storage': f'S3 ({S3_BUCKET})',
-            'status': 'success'
-        }
+        """JSON API endpoint for visitor statistics"""
+        return tracker.get_stats_for_api()
 
     @application.errorhandler(404)
     def page_not_found(e):
