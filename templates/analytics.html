@@ -105,7 +105,7 @@
                         <div class="bar-container">
                             <div class="bar-fill" style="height: {{ (day.unique_visitors / 10 * 100) if day.unique_visitors > 0 else 5 }}%"></div>
                         </div>
-                        <div class="day-label">{{ day.date[8:10] }}/{{ day.date[5:7] }}</div>
+                        <div class="day-label">{{ day.date[5:7] }}/{{ day.date[8:10] }}</div>
                         <div class="day-stats">
                             <small>{{ day.unique_visitors }} visitors</small><br>
                             <small>{{ day.pageviews }} views</small>
