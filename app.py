@@ -45,6 +45,7 @@ def create_app(config_filename=None):
 
 
     @application.route('/aws-cda')
+    @application.route('/aws-cda-cert.pdf')
     @application.route('/static/aws-cda-cert.pdf')
     def aws_cda_cert():
         return send_from_directory(
