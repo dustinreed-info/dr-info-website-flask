@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% block title %}
+{{ title }} - Dustin Reed Info
+{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Website Analytics</h2>
+            <p class="section-subtitle">
+                Real-time visitor statistics and insights powered by IP-based tracking
+            </p>
+        </div>
+
+        <!-- Key Metrics Overview -->
+        <div class="analytics-overview">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>{{ visitor_data.unique_visitors }}</h3>
+                        <p>Unique Visitors</p>
+                        <span class="metric-change">All Time</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>{{ visitor_data.total_pageviews }}</h3>
+                        <p>Total Pageviews</p>
+                        <span class="metric-change">All Time</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>{{ visitor_data.total_ips_tracked }}</h3>
+                        <p>IPs Tracked</p>
+                        <span class="metric-change">Active Visitors</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>{{ "%.1f"|format(visitor_data.total_pageviews / visitor_data.unique_visitors if visitor_data.unique_visitors > 0 else 0) }}</h3>
+                        <p>Avg Pages/Visitor</p>
+                        <span class="metric-change">Engagement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Comparison -->
+        <div class="analytics-section">
+            <h3 class="section-title-small">Monthly Overview</h3>
+            <div class="monthly-grid">
+                <div class="month-card">
+                    <h4>{{ current_month_period }}</h4>
+                    <div class="month-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Unique Visitors</span>
+                            <span class="stat-value">{{ current_month.unique_visitors }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Pageviews</span>
+                            <span class="stat-value">{{ current_month.pageviews }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="month-card">
+                    <h4>{{ last_month_period }}</h4>
+                    <div class="month-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Unique Visitors</span>
+                            <span class="stat-value">{{ last_month.unique_visitors }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Pageviews</span>
+                            <span class="stat-value">{{ last_month.pageviews }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Activity Chart -->
+        <div class="analytics-section">
+            <h3 class="section-title-small">Daily Activity (Last 7 Days)</h3>
+            <div class="daily-activity">
+                <div class="daily-chart">
+                    {% for day in recent_daily %}
+                    <div class="day-bar">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="height: {{ (day.unique_visitors / 10 * 100) if day.unique_visitors > 0 else 5 }}%"></div>
+                        </div>
+                        <div class="day-label">{{ day.date[8:10] }}/{{ day.date[5:7] }}</div>
+                        <div class="day-stats">
+                            <small>{{ day.unique_visitors }} visitors</small><br>
+                            <small>{{ day.pageviews }} views</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- User Agent Analytics -->
+        {% if browsers %}
+        <div class="analytics-section">
+            <h3 class="section-title-small">Browser Analytics ({{ current_month_period }})</h3>
+            <div class="ua-stats-grid">
+                {% for browser, count in browsers.items() %}
+                <div class="ua-stat-card">
+                    <div class="ua-icon">
+                        <i class="fab fa-chrome"></i>
+                    </div>
+                    <div class="ua-content">
+                        <h4>{{ browser }}</h4>
+                        <p>{{ count }} visits</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if os_stats %}
+        <div class="analytics-section">
+            <h3 class="section-title-small">Operating System ({{ current_month_period }})</h3>
+            <div class="ua-stats-grid">
+                {% for os_name, count in os_stats.items() %}
+                <div class="ua-stat-card">
+                    <div class="ua-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <div class="ua-content">
+                        <h4>{{ os_name }}</h4>
+                        <p>{{ count }} visits</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if devices %}
+        <div class="analytics-section">
+            <h3 class="section-title-small">Device Types ({{ current_month_period }})</h3>
+            <div class="ua-stats-grid">
+                {% for device, count in devices.items() %}
+                <div class="ua-stat-card">
+                    <div class="ua-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="ua-content">
+                        <h4>{{ device }}</h4>
+                        <p>{{ count }} visits</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Top Visitors -->
+        {% if top_ips %}
+        <div class="analytics-section">
+            <h3 class="section-title-small">Top Visitors</h3>
+            <div class="top-ips-table">
+                <div class="table-header">
+                    <span>IP Address</span>
+                    <span>Browser</span>
+                    <span>OS</span>
+                    <span>Device</span>
+                    <span>Visits</span>
+                    <span>Last Visit</span>
+                </div>
+                {% for ip in top_ips %}
+                <div class="table-row">
+                    <span class="ip-address">{{ ip.ip }}</span>
+                    <span class="browser">
+                        {% if ip.user_agents %}
+                            {% for ua in ip.user_agents %}
+                                {{ ua.browser }}{% if not loop.last %} / {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {{ ip.browser }}
+                        {% endif %}
+                    </span>
+                    <span class="os">
+                        {% if ip.user_agents %}
+                            {% for ua in ip.user_agents %}
+                                {{ ua.os }}{% if not loop.last %} / {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {{ ip.os }}
+                        {% endif %}
+                    </span>
+                    <span class="device">{{ ip.device }}</span>
+                    <span class="visit-count">{{ ip.visit_count }}</span>
+                    <span class="date">{{ ip.last_visit }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Technical Info -->
+        <div class="analytics-section">
+            <h3 class="section-title-small">Technical Details</h3>
+            <div class="tech-info">
+                <div class="info-item">
+                    <i class="fas fa-database"></i>
+                    <span>Storage: S3 (mail.dustinreed.info)</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Last Updated: Real-time</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-code"></i>
+                    <span>Tracking: IP-based unique visitor detection with user agent analysis</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Note: Test/development requests show as "Test Client"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

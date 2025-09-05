@@ -10,3 +10,4 @@ werkzeug==3.0.3
 wtforms==2.2.1
 pytest-flask==1.1.0
 pytest==6.1.2
+user-agents==2.2.0
