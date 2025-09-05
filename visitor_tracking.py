@@ -6,6 +6,7 @@ Handles IP-based visitor analytics with S3 storage
 import os
 import json
 import boto3
+import ipaddress
 from datetime import datetime, timedelta
 from user_agents import parse
 
@@ -23,6 +24,15 @@ class VisitorTracker:
         except Exception as e:
             print(f"Warning: Could not initialize S3 client: {e}")
             self.s3_client = None
+
+    def is_private_ip(self, ip_address):
+        """Check if IP address is private/local (192.x, 127.x, 172.x, 10.x)"""
+        try:
+            ip = ipaddress.ip_address(ip_address)
+            return ip.is_private or ip.is_loopback or ip.is_link_local
+        except ValueError:
+            # Invalid IP address format
+            return True
 
     def parse_user_agent(self, user_agent_string):
         """Parse user agent string and return device/browser info"""
@@ -193,6 +203,11 @@ class VisitorTracker:
     def track_visitor(self, client_ip, user_agent_string=None, page_visited=None):
         """Track a visitor with IP-based counting and user agent analysis"""
         if not client_ip:
+            return
+            
+        # Skip tracking for private/local IP addresses
+        if self.is_private_ip(client_ip):
+            print(f"Skipping tracking for private IP: {client_ip}")
             return
 
         # Parse user agent
