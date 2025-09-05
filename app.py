@@ -1,5 +1,7 @@
 import os
-from flask import Flask
+import json
+import boto3
+from flask import Flask, request
 from flask import render_template, flash, redirect, url_for
 from flask import send_file, send_from_directory
 
@@ -79,6 +81,76 @@ def create_app(config_filename=None):
             mimetype='image/vnd.microsoft.icon'
         )
 
+
+    # Visitor tracking using S3 for multi-instance support
+    S3_BUCKET = os.environ.get('S3_BUCKET', 'mail.dustinreed.info')
+    VISITOR_COUNT_KEY = 'visitor_count.json'
+
+    # Initialize S3 client
+    try:
+        s3_client = boto3.client('s3')
+    except Exception as e:
+        print(f"Warning: Could not initialize S3 client: {e}")
+        s3_client = None
+
+    def load_visitor_count():
+        """Load visitor count from S3"""
+        if not s3_client:
+            return 0
+
+        try:
+            response = s3_client.get_object(Bucket=S3_BUCKET, Key=VISITOR_COUNT_KEY)
+            body = response['Body']
+            content = body.read()
+            if isinstance(content, bytes):
+                content = content.decode('utf-8')
+            data = json.loads(content)
+            return data.get('count', 0)
+        except s3_client.exceptions.NoSuchKey:
+            # File doesn't exist yet, start with 0
+            return 0
+        except Exception as e:
+            print(f"Warning: Could not load visitor count from S3: {e}")
+            return 0
+
+    def save_visitor_count(count):
+        """Save visitor count to S3"""
+        if not s3_client:
+            return
+
+        try:
+            data = {'count': count}
+            json_string = json.dumps(data)
+            s3_client.put_object(
+                Bucket=S3_BUCKET,
+                Key=VISITOR_COUNT_KEY,
+                Body=json_string,
+                ContentType='application/json'
+            )
+        except Exception as e:
+            print(f"Warning: Could not save visitor count to S3: {e}")
+
+    @application.before_request
+    def track_visitors():
+        """Track unique visitors (basic IP-based tracking)"""
+        if request.endpoint and request.endpoint not in ['static', 'favicon']:
+            client_ip = request.remote_addr
+            if client_ip:
+                current_count = load_visitor_count()
+                # For simplicity, just increment on each request
+                # In production, you'd want more sophisticated unique visitor tracking
+                save_visitor_count(current_count + 1)
+
+    @application.route('/stats')
+    def visitor_stats():
+        """Hidden endpoint to view visitor statistics"""
+        count = load_visitor_count()
+        return {
+            'visitor_count': count,
+            'message': f'Total visitors: {count}',
+            'storage': f'S3 ({S3_BUCKET})',
+            'status': 'success'
+        }
 
     @application.errorhandler(404)
     def page_not_found(e):
