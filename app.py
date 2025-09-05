@@ -56,7 +56,7 @@ def create_app(config_filename=None):
 
     @application.route('/aws-csa')
     # Had typo in old resume.
-    @application.route('/aws-csa.cert.pdf')
+    @application.route('/aws-csa-cert.pdf')
     @application.route('/static/aws-csa-cert.pdf')
     def aws_csa_cert():
         return send_from_directory(
