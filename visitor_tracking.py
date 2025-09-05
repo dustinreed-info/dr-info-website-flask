@@ -144,10 +144,16 @@ class VisitorTracker:
             for period in data.get('monthly', {}):
                 if not isinstance(data['monthly'][period], dict):
                     data['monthly'][period] = {'unique_visitors': data['monthly'][period], 'pageviews': data['monthly'][period]}
+                # Ensure pages field exists for backward compatibility
+                if 'pages' not in data['monthly'][period]:
+                    data['monthly'][period]['pages'] = {}
 
             for period in data.get('daily', {}):
                 if not isinstance(data['daily'][period], dict):
                     data['daily'][period] = {'unique_visitors': data['daily'][period], 'pageviews': data['daily'][period]}
+                # Ensure pages field exists for backward compatibility
+                if 'pages' not in data['daily'][period]:
+                    data['daily'][period]['pages'] = {}
 
             return data
         except self.s3_client.exceptions.NoSuchKey:
@@ -184,13 +190,34 @@ class VisitorTracker:
         except Exception as e:
             print(f"Warning: Could not save visitor data to S3: {e}")
 
-    def track_visitor(self, client_ip, user_agent_string=None):
+    def track_visitor(self, client_ip, user_agent_string=None, page_visited=None):
         """Track a visitor with IP-based counting and user agent analysis"""
         if not client_ip:
             return
 
         # Parse user agent
         user_agent_info = self.parse_user_agent(user_agent_string)
+        
+        # Normalize page name for better tracking
+        if page_visited:
+            # Map common routes to friendly names
+            page_mapping = {
+                'index': 'Home',
+                'home': 'Home', 
+                'about': 'About',
+                'contact': 'Contact',
+                'projects': 'Projects',
+                'certifications': 'Certifications',
+                'certs': 'Certifications',
+                'resume': 'Resume',
+                'analytics': 'Analytics',
+                'stats': 'Analytics',
+                'aws_cda_cert': 'AWS CDA Certificate',
+                'aws_csa_cert': 'AWS CSA Certificate'
+            }
+            page_name = page_mapping.get(page_visited, page_visited.title())
+        else:
+            page_name = 'Unknown'
 
         # Get current date info
         now = datetime.now()
@@ -250,7 +277,8 @@ class VisitorTracker:
                 'ips': {},
                 'browsers': {},
                 'os': {},
-                'devices': {}
+                'devices': {},
+                'pages': {}
             }
 
         # Check if this IP is new for this month
@@ -278,6 +306,13 @@ class VisitorTracker:
             visitor_data['monthly'][current_month]['devices'][device] = 0
         visitor_data['monthly'][current_month]['devices'][device] += 1
 
+        # Track page stats for this month
+        if 'pages' not in visitor_data['monthly'][current_month]:
+            visitor_data['monthly'][current_month]['pages'] = {}
+        if page_name not in visitor_data['monthly'][current_month]['pages']:
+            visitor_data['monthly'][current_month]['pages'][page_name] = 0
+        visitor_data['monthly'][current_month]['pages'][page_name] += 1
+
         # Handle daily tracking
         if current_day not in visitor_data['daily']:
             visitor_data['daily'][current_day] = {
@@ -286,7 +321,8 @@ class VisitorTracker:
                 'ips': {},
                 'browsers': {},
                 'os': {},
-                'devices': {}
+                'devices': {},
+                'pages': {}
             }
 
         # Check if this IP is new for this day
@@ -310,6 +346,13 @@ class VisitorTracker:
         if device not in visitor_data['daily'][current_day]['devices']:
             visitor_data['daily'][current_day]['devices'][device] = 0
         visitor_data['daily'][current_day]['devices'][device] += 1
+
+        # Track page stats for this day
+        if 'pages' not in visitor_data['daily'][current_day]:
+            visitor_data['daily'][current_day]['pages'] = {}
+        if page_name not in visitor_data['daily'][current_day]['pages']:
+            visitor_data['daily'][current_day]['pages'][page_name] = 0
+        visitor_data['daily'][current_day]['pages'][page_name] += 1
 
         # Save updated data
         self.save_visitor_data(visitor_data)
@@ -408,10 +451,11 @@ class VisitorTracker:
                 'user_agents': data.get('user_agents', [])  # Include full user agents list
             })
 
-        # Get browser, OS, and device analytics for current month
+        # Get browser, OS, device, and page analytics for current month
         current_browsers = current_month_data.get('browsers', {})
         current_os = current_month_data.get('os', {})
         current_devices = current_month_data.get('devices', {})
+        current_pages = current_month_data.get('pages', {})
 
         return {
             'visitor_data': visitor_data,
@@ -423,7 +467,8 @@ class VisitorTracker:
             'last_month_period': last_month,
             'browsers': current_browsers,
             'os_stats': current_os,
-            'devices': current_devices
+            'devices': current_devices,
+            'pages': current_pages
         }
 
 
