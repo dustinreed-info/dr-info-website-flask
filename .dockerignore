@@ -1,0 +1,10 @@
+.git
+.github
+node_modules
+dist
+.astro
+*.md
+.env
+.env.example
+scripts
+bucket-policy.json

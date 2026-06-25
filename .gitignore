@@ -112,3 +112,13 @@ venv.bak/
 
 # local files
 ./local
+
+# node / astro
+node_modules/
+.astro/
+dist/
+
+# playwright
+test-results/
+playwright-report/
+/playwright/.cache/

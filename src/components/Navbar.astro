@@ -1,0 +1,47 @@
+---
+---
+<header class="main-header">
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-text">Dustin Reed</span>
+      </a>
+
+      <div class="nav-toggle" id="nav-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <div class="nav-menu" id="nav-menu">
+        <a href="/about/" class="nav-link">About</a>
+        <a href="/certifications/" class="nav-link">Certifications</a>
+        <a href="/projects/" class="nav-link">Projects</a>
+        <a href="/contact/" class="nav-link">Contact</a>
+        <a href="/Resume-Reed-Dustin.pdf" class="nav-link">Resume</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+      });
+
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach((link) => {
+        link.addEventListener('click', function () {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+        });
+      });
+    }
+  });
+</script>

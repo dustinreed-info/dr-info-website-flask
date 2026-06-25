@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout pageTitle="About - Dustin Reed">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">About This Website</h2>
+        <p class="section-subtitle">
+          Built with modern web technologies and deployed on AWS infrastructure
+        </p>
+      </div>
+
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            This site is built with Astro and Tailwind CSS as a static site. The pages use
+            semantic HTML5 and CSS Grid and Flexbox for responsive, accessible layouts.
+          </p>
+
+          <p>
+            It deploys through a GitHub Actions workflow that builds the site and pushes it to AWS
+            on every change to the main branch.
+          </p>
+
+          <p>
+            The built files are hosted on Amazon S3 and served through CloudFront for HTTPS and
+            caching at the edge.
+          </p>
+
+          <div class="tech-stack">
+            <h3>Technology Stack</h3>
+            <div class="tech-stack-grid">
+              <div class="tech-item">
+                <i class="fab fa-js"></i>
+                <span>Astro</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-css3-alt"></i>
+                <span>Tailwind CSS</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-html5"></i>
+                <span>HTML5</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-aws"></i>
+                <span>AWS</span>
+              </div>
+              <div class="tech-item">
+                <i class="fab fa-docker"></i>
+                <span>Docker</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h3>Automated Deployments</h3>
+            <p>GitHub Actions builds and deploys to S3 + CloudFront on every push</p>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Cloud Infrastructure</h3>
+            <p>S3 + CloudFront static hosting with HTTPS and edge caching</p>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Responsive Design</h3>
+            <p>Modern, mobile-first approach with accessibility in mind</p>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Component-Based</h3>
+            <p>Reusable Astro layouts and components shared across pages</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">AI &amp; Automation Experience</h2>
+        <p class="section-subtitle">
+          Architecting AI-driven automation on a DevOps and cloud foundation
+        </p>
+      </div>
+
+      <div class="about-text">
+        <p>
+          My work centers on AI automation architecture: designing agentic AI platforms and
+          autonomous, human-in-the-loop workflows, and integrating LLM and RAG systems with Databricks
+          and Azure AI. I focus on how these systems are orchestrated, served, and operated rather
+          than on one-off models.
+        </p>
+
+        <p>
+          A long DevOps and cloud background informs that work. I build the CI/CD and MLOps/LLMOps
+          pipelines that move AI workflows from experimentation into reliable, observable, and secure
+          production, including in government cloud environments. The result is AI automation that
+          teams can actually run and trust.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">
+          Interested in collaboration or have questions about my work?
+        </p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email Me</h3>
+          <p>Feel free to reach out for collaboration opportunities or technical discussions.</p>
+          <a href="mailto:dustin@dustinreedinfo" class="btn btn-primary">
+            <i class="fas fa-envelope"></i>
+            Send Email
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fab fa-linkedin"></i>
+          </div>
+          <h3>Connect on LinkedIn</h3>
+          <p>Let's connect professionally and explore potential opportunities.</p>
+          <a href="https://www.linkedin.com/in/dustinreed/" target="_blank" class="btn btn-secondary">
+            <i class="fab fa-linkedin"></i>
+            View Profile
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

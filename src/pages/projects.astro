@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Project {
+  icon: string;
+  title: string;
+  url: string;
+  description: string;
+  tech: string[];
+}
+
+const projects: Project[] = [
+  {
+    icon: 'fas fa-globe',
+    title: 'Dustin Reed - Info Website',
+    url: 'https://github.com/dustinreed-info/dr-info-website-flask',
+    description:
+      'The source code for this website, built with Astro and Tailwind CSS and deployed to AWS S3 + CloudFront.',
+    tech: ['Astro', 'Tailwind CSS', 'HTML5', 'AWS'],
+  },
+  {
+    icon: 'fas fa-tools',
+    title: 'Infrastructure as Code',
+    url: 'https://github.com/dustinreed-info/dr-terraform',
+    description:
+      'Terraform configurations for deploying this website and other applications to AWS. Demonstrates Infrastructure as Code best practices with modular design.',
+    tech: ['Terraform', 'AWS', 'Infrastructure as Code'],
+  },
+  {
+    icon: 'fas fa-cloud-upload-alt',
+    title: 'Web-Sync Tool',
+    url: 'https://github.com/dustinreed-info/aws-python-tools',
+    description:
+      'A comprehensive tool for syncing local directories to S3 buckets with automatic Route 53 DNS configuration and CloudFront distribution setup for secure static websites.',
+    tech: ['Python', 'AWS S3', 'CloudFront', 'Route 53'],
+  },
+  {
+    icon: 'fas fa-server',
+    title: 'Home Automation Stack',
+    url: 'https://github.com/dustinreed-info/docker-compose',
+    description:
+      'Docker Compose configuration defining a complete home automation infrastructure. Includes Home Assistant, MQTT broker, and various smart home integrations.',
+    tech: ['Docker', 'Docker Compose', 'Home Assistant', 'IoT'],
+  },
+  {
+    icon: 'fas fa-cogs',
+    title: 'Ansible Automation',
+    url: 'https://github.com/dustinreed-info/Ansible',
+    description:
+      'Ansible playbooks for automated server provisioning and configuration management. Used to set up and maintain Docker servers with consistent configurations.',
+    tech: ['Ansible', 'Automation', 'Configuration Management'],
+  },
+  {
+    icon: 'fas fa-lightbulb',
+    title: 'Smart Home Scripts',
+    url: 'https://github.com/dustinreed-info/AppDaemon-Scripts',
+    description:
+      'Python scripts for Home Assistant AppDaemon that automate lighting based on time of day, including dynamic color temperature and brightness adjustments for circadian rhythm support.',
+    tech: ['Python', 'Home Assistant', 'AppDaemon', 'Smart Home'],
+  },
+];
+---
+
+<BaseLayout pageTitle="Projects - Dustin Reed">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">My Projects</h2>
+        <p class="section-subtitle">
+          A showcase of my work in DevOps, cloud infrastructure, and automation
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        {
+          projects.map((project) => (
+            <div class="project-card">
+              <div class="project-icon">
+                <i class={project.icon} />
+              </div>
+              <h3 class="project-title">
+                <a href={project.url} target="_blank">
+                  {project.title}
+                  <i class="fas fa-external-link-alt" style="font-size: 14px; margin-left: 8px;" />
+                </a>
+              </h3>
+              <p class="project-description">{project.description}</p>
+              <div class="project-tech">
+                {project.tech.map((tag) => (
+                  <span class="tech-tag">{tag}</span>
+                ))}
+              </div>
+              <div class="project-links">
+                <a href={project.url} class="project-link" target="_blank">
+                  <i class="fab fa-github" /> View Code
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

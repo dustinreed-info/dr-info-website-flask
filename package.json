@@ -1,0 +1,26 @@
+{
+  "name": "dr-info-website",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static personal site for Dustin Reed, built with Astro + Tailwind, deployed to S3 + CloudFront.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "playwright test",
+    "deploy": "node scripts/deploy.js",
+    "deploy:s3": "node scripts/deploy.js"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.5",
+    "tailwindcss": "^4.1.18"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
