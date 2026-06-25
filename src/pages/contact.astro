@@ -59,12 +59,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="contact-form-container">
-          <form
-            class="contact-form"
-            action="mailto:dustin@dustinreedinfo"
-            method="post"
-            enctype="text/plain"
-          >
+          <form id="contact-form" class="contact-form">
+            <div id="form-success" class="form-alert form-alert-success hidden" role="alert">
+              <span class="form-alert-title">Success!</span>
+              Your message has been sent. I'll get back to you shortly.
+            </div>
+            <div id="form-error" class="form-alert form-alert-error hidden" role="alert">
+              <span class="form-alert-title">Error!</span>
+              <span id="error-message">Something went wrong. Please try again later.</span>
+            </div>
+
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" required />
@@ -85,7 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <textarea id="message" name="message" rows="6" required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" id="submit-btn" class="btn btn-primary">
               <i class="fas fa-paper-plane"></i>
               Send Message
             </button>
@@ -95,3 +99,69 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const successMsg = document.getElementById('form-success');
+  const errorMsg = document.getElementById('form-error');
+  const errorMessageSpan = document.getElementById('error-message');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  const LAMBDA_ENDPOINT = import.meta.env.PUBLIC_LAMBDA_ENDPOINT;
+
+  if (!LAMBDA_ENDPOINT || LAMBDA_ENDPOINT.includes('REPLACE_WITH')) {
+    console.warn('Warning: PUBLIC_LAMBDA_ENDPOINT is not set correctly. The form will not work.');
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!LAMBDA_ENDPOINT) {
+      console.error('LAMBDA_ENDPOINT is missing');
+      alert('Configuration Error: The contact form endpoint is not configured.');
+      return;
+    }
+
+    successMsg?.classList.add('hidden');
+    errorMsg?.classList.add('hidden');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    }
+
+    const formData = new FormData(form as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch(LAMBDA_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        successMsg?.classList.remove('hidden');
+        (form as HTMLFormElement).reset();
+      } else {
+        const errorText = await response.text();
+        console.error('Submission failed:', response.status, response.statusText, errorText);
+        throw new Error(`Submission failed: ${response.status} ${response.statusText}`);
+      }
+    } catch (err) {
+      errorMsg?.classList.remove('hidden');
+      if (errorMessageSpan) {
+        errorMessageSpan.textContent =
+          'Failed to send message. Please try again or email me directly.';
+      }
+      console.error(err);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      }
+    }
+  });
+</script>

@@ -1104,6 +1104,33 @@ a:hover {
     margin-top: var(--spacing-md);
 }
 
+.form-alert {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.form-alert.hidden {
+    display: none;
+}
+
+.form-alert-title {
+    font-weight: 600;
+}
+
+.form-alert-success {
+    color: #166534;
+    background-color: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.form-alert-error {
+    color: #991b1b;
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
 /* ========================================
    UTILITIES
    ======================================== */

@@ -61,6 +61,22 @@ test.describe('assets', () => {
   });
 });
 
+test.describe('contact form', () => {
+  test('renders Lambda-backed form fields', async ({ page }) => {
+    await page.goto('/contact/');
+
+    const form = page.locator('#contact-form');
+    await expect(form).toBeVisible();
+    await expect(form).not.toHaveAttribute('action', /mailto:/);
+
+    for (const field of ['name', 'email', 'subject', 'message']) {
+      await expect(form.locator(`[name="${field}"]`)).toBeVisible();
+    }
+
+    await expect(form.locator('#submit-btn')).toBeVisible();
+  });
+});
+
 test.describe('404', () => {
   test('unknown path renders the 404 page', async ({ page }) => {
     await page.goto('/does-not-exist');
