@@ -1,4 +1,32 @@
 import { test, expect } from '@playwright/test';
+import { TEST_LAMBDA_ENDPOINT } from './constants';
+
+const MOBILE_VIEWPORT = { width: 375, height: 667 };
+const DESKTOP_VIEWPORT = { width: 1280, height: 720 };
+
+async function fillContactForm(page: import('@playwright/test').Page) {
+  await page.locator('#name').fill('Test User');
+  await page.locator('#email').fill('test@example.com');
+  await page.locator('#subject').fill('Test Subject');
+  await page.locator('#message').fill('Test message for Playwright.');
+}
+
+async function mockContactSubmission(
+  page: import('@playwright/test').Page,
+  status: number,
+) {
+  await page.route(`**/${new URL(TEST_LAMBDA_ENDPOINT).host}/**`, async (route) => {
+    if (route.request().method() === 'POST') {
+      await route.fulfill({
+        status,
+        contentType: 'application/json',
+        body: status === 200 ? '{}' : JSON.stringify({ error: 'Server error' }),
+      });
+      return;
+    }
+    await route.continue();
+  });
+}
 
 const pages = [
   { path: '/', title: 'Home - Dustin Reed', heading: 'Dustin Reed' },
@@ -30,6 +58,24 @@ test.describe('navigation', () => {
 
     const resume = nav.getByRole('link', { name: 'Resume' });
     await expect(resume).toHaveAttribute('href', '/Resume-Reed-Dustin.pdf');
+  });
+
+  test('mobile nav toggle opens menu and navigates', async ({ page }) => {
+    await page.setViewportSize(MOBILE_VIEWPORT);
+    await page.goto('/');
+
+    const navToggle = page.locator('#nav-toggle');
+    const navMenu = page.locator('#nav-menu');
+
+    await expect(navToggle).toBeVisible();
+    await expect(navMenu).not.toHaveClass(/active/);
+
+    await navToggle.click();
+    await expect(navMenu).toHaveClass(/active/);
+
+    await navMenu.getByRole('link', { name: 'About' }).click();
+    await expect(page).toHaveURL('/about/');
+    await expect(page.getByRole('heading', { name: 'About This Website' }).first()).toBeVisible();
   });
 });
 
@@ -74,6 +120,73 @@ test.describe('contact form', () => {
     }
 
     await expect(form.locator('#submit-btn')).toBeVisible();
+  });
+
+  test('shows success alert on successful submission', async ({ page }) => {
+    await mockContactSubmission(page, 200);
+    await page.goto('/contact/');
+    await fillContactForm(page);
+
+    const submitPromise = page.waitForRequest(
+      (req) => req.method() === 'POST' && req.url().includes('test-lambda.example.com'),
+    );
+    await page.locator('#submit-btn').click();
+    const submitRequest = await submitPromise;
+
+    expect(submitRequest.postDataJSON()).toMatchObject({
+      name: 'Test User',
+      email: 'test@example.com',
+      subject: 'Test Subject',
+      message: 'Test message for Playwright.',
+    });
+
+    const successAlert = page.locator('#form-success');
+    await expect(successAlert).toBeVisible();
+    await expect(successAlert).toContainText('Success!');
+    await expect(page.locator('#form-error')).toHaveClass(/hidden/);
+  });
+
+  test('shows error alert on failed submission', async ({ page }) => {
+    await mockContactSubmission(page, 500);
+    await page.goto('/contact/');
+    await fillContactForm(page);
+    await page.locator('#submit-btn').click();
+
+    const errorAlert = page.locator('#form-error');
+    await expect(errorAlert).toBeVisible();
+    await expect(errorAlert).toContainText('Error!');
+    await expect(errorAlert).toContainText('Failed to send message');
+    await expect(page.locator('#form-success')).toHaveClass(/hidden/);
+  });
+});
+
+test.describe('visual snapshots', () => {
+  test('home page desktop', async ({ page }) => {
+    await page.setViewportSize(DESKTOP_VIEWPORT);
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'Dustin Reed' }).first()).toBeVisible();
+    await expect(page).toHaveScreenshot('home-desktop.png');
+  });
+
+  test('home page mobile', async ({ page }) => {
+    await page.setViewportSize(MOBILE_VIEWPORT);
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'Dustin Reed' }).first()).toBeVisible();
+    await expect(page).toHaveScreenshot('home-mobile.png');
+  });
+
+  test('contact page desktop', async ({ page }) => {
+    await page.setViewportSize(DESKTOP_VIEWPORT);
+    await page.goto('/contact/');
+    await expect(page.getByRole('heading', { name: 'Get In Touch' }).first()).toBeVisible();
+    await expect(page).toHaveScreenshot('contact-desktop.png');
+  });
+
+  test('contact page mobile', async ({ page }) => {
+    await page.setViewportSize(MOBILE_VIEWPORT);
+    await page.goto('/contact/');
+    await expect(page.getByRole('heading', { name: 'Get In Touch' }).first()).toBeVisible();
+    await expect(page).toHaveScreenshot('contact-mobile.png');
   });
 });
 

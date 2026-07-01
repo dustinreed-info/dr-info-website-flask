@@ -1182,6 +1182,59 @@ a:hover {
     border: 1px solid rgba(252, 165, 165, 0.45);
 }
 
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .contact-form-container {
+        padding: var(--spacing-lg);
+    }
+
+    .contact-method {
+        flex-direction: row;
+        text-align: left;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .method-icon {
+        align-self: flex-start;
+    }
+
+    .method-content a {
+        word-break: break-word;
+    }
+
+    .contact-availability {
+        padding: var(--spacing-lg);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+    }
+
+    .contact-form button[type="submit"] {
+        width: 100%;
+        max-width: none;
+        align-self: stretch;
+        justify-content: center;
+        min-height: 44px;
+    }
+
+    .form-alert {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
 /* ========================================
    ERROR PAGE
    ======================================== */

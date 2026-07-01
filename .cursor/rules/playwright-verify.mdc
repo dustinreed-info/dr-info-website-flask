@@ -1,0 +1,58 @@
+---
+description: Run Playwright e2e tests after UI, routing, or deploy workflow changes
+globs: src/**/*,public/static/**/*,tests/**/*,playwright.config.ts,.github/workflows/deploy.yml
+alwaysApply: false
+---
+
+# Playwright verification
+
+After changing anything that affects the site UI, routing, styles, or deploy workflow, verify with Playwright before marking the task done.
+
+## When to run
+
+Run tests after edits to:
+
+- `src/` (pages, layouts, components)
+- `public/static/site.css` and other static assets that affect the live site
+- Playwright tests or `playwright.config.ts`
+- `.github/workflows/deploy.yml` (recommended before declaring deploy changes done)
+
+Do **not** skip tests for "trivial" CSS or markup changes — still run the full suite.
+
+## Commands
+
+CI runs tests via Docker (`docker build --target test .` in `.github/workflows/deploy.yml`).
+Locally, use either approach:
+
+```bash
+docker build --target test .   # matches CI (Playwright image, no host browser install)
+```
+
+```bash
+npm test
+# equivalent: npx playwright test
+```
+
+On a fresh host environment (without Docker), install the browser first:
+
+```bash
+npx playwright install chromium
+```
+
+## Required workflow
+
+1. Make your changes.
+2. Run `docker build --target test .` or `npm test` (or `npx playwright test`).
+3. If tests fail, fix the issue and re-run until green.
+4. Only then consider the task complete.
+
+Do not skip this step because changes seem small or cosmetic.
+
+## Coverage (18 tests)
+
+- Page loads, navbar links, mobile nav toggle/navigation
+- Contact form render, mocked success (200), and error (500) submission
+- Asset checks, 404 page
+- Visual snapshots: home and contact at desktop (1280px) and mobile (375px)
+
+The Playwright `webServer` sets `PUBLIC_LAMBDA_ENDPOINT` to a dummy URL at build time; contact submission tests intercept that URL and never call real Lambda.

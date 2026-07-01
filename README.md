@@ -40,10 +40,17 @@ npm test         # run the Playwright e2e suite
 
 The first time you run the tests, install the browser: `npx playwright install chromium`.
 
+Cursor is configured (via `.cursor/rules/playwright-verify.mdc`) to run `npm test` after UI or routing changes and fix failures before finishing a task.
+
 ## Docker
 
+CI builds and tests inside Docker (`test` and `export` stages in the Dockerfile).
+Locally you can mirror CI or preview the nginx image:
+
 ```bash
-docker build -t dr-info-static .
+docker build --target test .                # same Playwright suite as CI
+docker build --target export -o type=local,dest=./dist .   # extract dist/ for deploy
+docker build -t dr-info-static .            # nginx prod image (local preview)
 docker run --rm -p 8080:80 dr-info-static   # http://localhost:8080
 ```
 
