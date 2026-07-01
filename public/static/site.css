@@ -616,11 +616,6 @@ a:hover {
         padding: var(--spacing-xl) 0;
     }
 
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-xl);
-    }
-
     .contact-method {
         flex-direction: column;
         text-align: center;
@@ -629,15 +624,6 @@ a:hover {
 
     .method-icon {
         align-self: center;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-xl);
-    }
-
-    .certifications-grid {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -1183,6 +1169,24 @@ a:hover {
 }
 
 @media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certifications-info {
+        grid-template-columns: 1fr;
+    }
+
     .contact-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);

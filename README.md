@@ -36,11 +36,28 @@ npm run dev      # http://localhost:4321
 npm run build    # outputs static site to dist/
 npm run preview  # preview the built site
 npm test         # run the Playwright e2e suite
+npm run screenshots                    # capture after set (default)
+npm run screenshots -- before|after  # full-page visual audit (12 PNGs per set)
+npm run screenshots:both               # capture before and after sequentially
 ```
 
-The first time you run the tests, install the browser: `npx playwright install chromium`.
+The first time you run the tests or screenshots, install the browser: `npx playwright install chromium`.
 
 Cursor is configured (via `.cursor/rules/playwright-verify.mdc`) to run `npm test` after UI or routing changes and fix failures before finishing a task.
+
+## Visual comparison
+
+For CSS, layout, or other visual changes, capture before/after screenshots and compare them:
+
+```bash
+npm run screenshots -- before   # baseline before editing
+# … make changes, npm test until green …
+npm run screenshots              # post-change set (defaults to after)
+# or: npm run screenshots -- after
+# or: npm run screenshots:both    # both sets in one run
+```
+
+Compare matching PNGs in `screenshots/before/` vs `screenshots/after/` (12 images per set: 6 pages at desktop 1280px and mobile 375px). `screenshots/` is gitignored — do not commit these files.
 
 ## Docker
 

@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Playwright verification
 
-After changing anything that affects the site UI, routing, styles, or deploy workflow, verify with Playwright before marking the task done.
+After changing anything that affects the site UI, routing, styles, or deploy workflow, verify with Playwright before marking the task done. For visual/CSS/layout changes, also follow `.cursor/rules/screenshot-compare.mdc`.
 
 ## When to run
 

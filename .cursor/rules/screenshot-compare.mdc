@@ -1,0 +1,34 @@
+---
+description: Before/after screenshot comparison for visual, CSS, and layout changes
+globs: src/**/*,public/static/**/*,src/styles/**/*
+alwaysApply: false
+---
+
+# Screenshot comparison
+
+When making visual, CSS, or layout changes, capture and compare full-page screenshots before and after edits.
+
+## Workflow
+
+1. **Before editing** — capture baseline:
+   ```bash
+   npm run screenshots -- before
+   ```
+2. Make your changes.
+3. Run `npm test` (or `docker build --target test .`) and fix failures until green.
+4. **After edits** — capture post-change set:
+   ```bash
+   npm run screenshots -- after
+   ```
+5. **Compare** PNG pairs in `screenshots/before/` vs `screenshots/after/` for affected pages (desktop + mobile). Use the Read tool on images or Playwright MCP. Verify the change matches user intent; if you changed global CSS, check other pages for regressions.
+6. Fix any regressions and re-run steps 3–5 before marking the task done.
+
+## Output layout
+
+`screenshots/{before|after}/{page}-{desktop|mobile}.png` — 6 pages × 2 viewports (1280px desktop, 375px mobile) = 12 PNGs per set.
+
+Pages: `home`, `about`, `certifications`, `contact`, `projects`, `404`.
+
+## Git
+
+`screenshots/` is gitignored. Never commit PNGs from this workflow.
