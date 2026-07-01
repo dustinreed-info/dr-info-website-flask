@@ -13,6 +13,7 @@
     "test": "playwright test",
     "screenshots": "node scripts/screenshots.mjs",
     "screenshots:both": "node scripts/screenshots.mjs both",
+    "screenshots:firefox-mobile": "node scripts/screenshots-firefox-mobile.mjs",
     "deploy": "node scripts/deploy.js",
     "deploy:s3": "node scripts/deploy.js"
   },

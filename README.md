@@ -43,6 +43,13 @@ npm run screenshots:both               # capture before and after sequentially
 
 The first time you run the tests or screenshots, install the browser: `npx playwright install chromium`.
 
+After intentional visual/CSS changes, regenerate committed Playwright baselines and include them in your PR:
+
+```bash
+npx playwright test --update-snapshots
+# commit tests/site.spec.ts-snapshots/*.png
+```
+
 Cursor is configured (via `.cursor/rules/playwright-verify.mdc`) to run `npm test` after UI or routing changes and fix failures before finishing a task.
 
 ## Visual comparison
@@ -58,6 +65,17 @@ npm run screenshots              # post-change set (defaults to after)
 ```
 
 Compare matching PNGs in `screenshots/before/` vs `screenshots/after/` (12 images per set: 6 pages at desktop 1280px and mobile 375px). `screenshots/` is gitignored — do not commit these files.
+
+### Cross-browser (Firefox mobile)
+
+CI and `npm test` use **Chromium only** (18 tests, including visual snapshots). For Firefox mobile layout checks:
+
+```bash
+npx playwright install firefox   # first time only
+npm run screenshots:firefox-mobile
+```
+
+This writes `screenshots/firefox-mobile/` and `screenshots/chromium-mobile/` (375×667) for manual comparison. Firefox is not in CI to avoid flaky cross-engine snapshot drift.
 
 ## Docker
 
