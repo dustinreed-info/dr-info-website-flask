@@ -122,3 +122,7 @@ dist/
 test-results/
 playwright-report/
 /playwright/.cache/
+.playwright-mcp/
+
+# visual audit artifacts (local before/after screenshots)
+screenshots/

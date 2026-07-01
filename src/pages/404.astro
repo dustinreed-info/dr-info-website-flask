@@ -3,14 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout pageTitle="Error - Dustin Reed">
-  <section class="section">
+  <section class="section error-section">
     <div class="container">
-      <h2>Error:</h2>
-      <p>The requested file could not be found. Please check the URL and try again.</p>
-      <a href="/" class="btn btn-primary">
-        <i class="fas fa-home"></i>
-        Back to Home
-      </a>
+      <div class="section-header">
+        <h1 class="section-title">Page Not Found</h1>
+        <p class="section-subtitle">
+          The requested file could not be found. Please check the URL and try again.
+        </p>
+      </div>
+
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">
+          <i class="fas fa-home"></i>
+          Back to Home
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

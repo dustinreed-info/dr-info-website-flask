@@ -28,6 +28,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
     if (navToggle && navMenu) {
       navToggle.addEventListener('click', function () {
@@ -35,7 +36,6 @@
         navToggle.classList.toggle('active');
       });
 
-      const navLinks = document.querySelectorAll('.nav-link');
       navLinks.forEach((link) => {
         link.addEventListener('click', function () {
           navMenu.classList.remove('active');
@@ -43,5 +43,22 @@
         });
       });
     }
+
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    navLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href || href.endsWith('.pdf')) {
+        return;
+      }
+
+      const linkPath = href.replace(/\/$/, '') || '/';
+      const isHome = linkPath === '/' && (currentPath === '/' || currentPath === '/index.html');
+      const isActive = isHome || (linkPath !== '/' && currentPath.startsWith(linkPath));
+
+      if (isActive) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
   });
 </script>
